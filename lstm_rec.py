@@ -54,6 +54,7 @@ class LSTM(Model):
         labels = tf.reshape(self.body(inputs=inputs, 
             mode=tf.estimator.ModeKeys.PREDICT), [-1])
         pred_values = tf.expand_dims(tf.linalg.diag_part(tf.nn.embedding_lookup(prediction_transposed, labels)), -1)
+        #TODO Line 56 needs fixing. 
         tile_pred_values = tf.tile(pred_values, [1, self.args.n_items])
         ranks = tf.reduce_sum(tf.cast(prediction[:,1:] > tile_pred_values, dtype=tf.float32), -1) + 1
 
